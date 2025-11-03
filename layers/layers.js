@@ -53,3 +53,34 @@ lyr_KoperasiMerahPutih_2.set('fieldLabels', {'No': 'hidden field', 'Nama Koper':
 lyr_KoperasiMerahPutih_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
+
+map.on('singleclick', function(evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+        return feature;
+    });
+
+    if (feature && feature.get('Nama Koper')) {
+
+        var nama = feature.get('Nama Koper');
+        var alamat = feature.get('Alamat');
+        var luas = feature.get('Luas Lahan');
+        var foto = feature.get('images'); 
+
+        var content = '<b>' + nama + '</b><br>' +
+                      alamat + '<br>' +
+                      'Luas Lahan: ' + luas + '<br>';
+
+        // Jika kolom images ada → tampilkan gambar
+        if (foto) {
+            content += '<br><img src="images/' + foto + '" width="200px">';
+        }
+
+        // Tampilkan popup
+        document.getElementById("popup-content").innerHTML = content;
+        overlay.setPosition(evt.coordinate);
+
+    } else {
+        // klik di area kosong → popup hilang
+        overlay.setPosition(undefined);
+    }
+});
