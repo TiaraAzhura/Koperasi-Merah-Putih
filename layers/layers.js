@@ -50,10 +50,12 @@ lyr_KecamatanKabBandung_1.set('fieldImages', {'Kelurahan': 'TextEdit', 'Kecamata
 lyr_KoperasiMerahPutih_2.set('fieldImages', {'No': 'TextEdit', 'Nama Koper': 'TextEdit', 'Alamat': 'TextEdit', 'Koordinat': 'TextEdit', 'Y': 'TextEdit', 'X': 'TextEdit', 'Luas Lahan': 'TextEdit', });
 lyr_KecamatanKabBandung_1.set('fieldLabels', {'Kelurahan': 'inline label - visible with data', 'Kecamatan': 'hidden field', 'UPTD': 'hidden field', 'Total': 'hidden field', 'Penduduk': 'hidden field', });
 lyr_KoperasiMerahPutih_2.set('fieldLabels', {'No': 'hidden field', 'Nama Koper': 'inline label - visible with data', 'Alamat': 'inline label - visible with data', 'Koordinat': 'inline label - visible with data', 'Y': 'hidden field', 'X': 'hidden field', 'Luas Lahan': 'inline label - visible with data', });
+
 lyr_KoperasiMerahPutih_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
 
+// POPUP KLIK FITUR
 map.on('singleclick', function(evt) {
     var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
         return feature;
@@ -73,10 +75,8 @@ map.on('singleclick', function(evt) {
             content += '<br><img src="images/' + foto + '" width="200px">';
         }
 
-        var coordinate = evt.coordinate;
-        var popup = document.getElementById("popup-content");
-        popup.innerHTML = content;
-        overlay.setPosition(coordinate);
+        document.getElementById("popup-content").innerHTML = content;
+        overlay.setPosition(evt.coordinate);
     } else {
         overlay.setPosition(undefined);
     }
