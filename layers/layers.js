@@ -52,4 +52,25 @@ lyr_KecamatanKabBandung_1.set('fieldLabels', {'Kelurahan': 'inline label - visib
 lyr_KoperasiMerahPutih_2.set('fieldLabels', {'No': 'hidden field', 'Nama Koper': 'inline label - visible with data', 'Alamat': 'inline label - visible with data', 'Koordinat': 'inline label - visible with data', 'Y': 'hidden field', 'X': 'hidden field', 'Luas Lahan': 'inline label - visible with data', });
 lyr_KoperasiMerahPutih_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
+lyr_KoperasiMerahPutih_2.on('click', function(evt) {
+    var feature = evt.feature;
+    var nama = feature.get('Nama Koper');
+    var alamat = feature.get('Alamat');
+    var luas = feature.get('Luas Lahan');
+    var foto = feature.get('images'); 
+
+    var content = '<b>' + nama + '</b><br>' +
+                  alamat + '<br>' +
+                  'Luas: ' + luas + '<br>';
+
+    if (foto) {
+        content += '<br><img src="images/' + foto + '" width="200px">';
+    }
+
+    var coordinate = evt.coordinate;
+    var popup = document.getElementById("popup-content");
+    popup.innerHTML = content;
+    overlay.setPosition(coordinate);
+});
+
 });
