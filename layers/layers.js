@@ -56,33 +56,3 @@ lyr_KoperasiMerahPutih_2.set('fieldLabels', {'No': 'hidden field', 'Nama Koper':
 lyr_KoperasiMerahPutih_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
-
-// 🎯 Event klik pada fitur peta
-map.on('singleclick', function(evt) {
-    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
-        return feature;
-    });
-
-    if (feature && feature.get('Nama Koper')) {
-
-        var nama = feature.get('Nama Koper');
-        var alamat = feature.get('Alamat');
-        var luas = feature.get('Luas Lahan');
-        var foto = feature.get('images'); 
-
-        var contentHtml = '<b>' + nama + '</b><br>' +
-                          alamat + '<br>' +
-                          'Luas Lahan: ' + luas + '<br>';
-
-        // Jika ada kolom images → tampilkan gambar
-        if (foto) {
-            contentHtml += '<br><img src="images/' + foto + '" width="200px">';
-        }
-
-        content.innerHTML = contentHtml;
-        overlay.setPosition(evt.coordinate);
-
-    } else {
-        overlay.setPosition(undefined);
-    }
-});
