@@ -57,29 +57,6 @@ lyr_KoperasiMerahPutih_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
 
-
-// 🧩 Tambahkan overlay popup di sini
-var container = document.getElementById('popup');
-var content = document.getElementById('popup-content');
-var closer = document.getElementById('popup-closer');
-
-var overlay = new ol.Overlay({
-  element: container,
-  autoPan: {
-    animation: {
-      duration: 250
-    }
-  }
-});
-map.addOverlay(overlay);
-
-closer.onclick = function () {
-  overlay.setPosition(undefined);
-  closer.blur();
-  return false;
-};
-
-
 // 🎯 Event klik pada fitur peta
 map.on('singleclick', function(evt) {
     var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
